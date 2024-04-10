@@ -1,12 +1,26 @@
 import numpy as np
 import pandas as pd
 from pathlib import Path
+import matplotlib.pyplot as plt
+import matplotlib as mplt
+#mplt.use('TkAgg')
+import tkinter as tk
+import sympy as sp
+from sympy.printing.pretty import pprint
 class OLS():
 
     def __init__(self):
-        self.PATH_TO_DATASET = 'dataset/Housing.csv'
-        self._test = 1
-        self._df = pd.DataFrame()
+        '''
+        Class constructor
+        '''
+        self.PATH_TO_DATASET = 'dataset/Housing.csv'  # path to dataset
+        self._df = pd.DataFrame()  # data frame of dataset
+        self._outputDf = pd.DataFrame()  # dataFrame with calc data
+        
+        self._x, self._y = sp.symbols('x y')
+        self._x_assume = self._x.conjugate()
+        self._y_assume = self._y.conjugate()
+
 
     def _StoringDataSet(self):
         '''
@@ -24,7 +38,26 @@ class OLS():
 
         if self._df.empty:  # check is dataframe not empty
             raise Exception(f'Waring! Data set on path {self.PATH_TO_DATASET} is empty. Counting is aborted.')
-    
+
+
+    def _Vizualization(self):
+        #print(self._df['price'])
+        
+        price = self._df['price']
+        area = self._df['area']
+        print(self._df['area'].min(), self._df['area'].max(), self._df['price'].min(), self._df['price'].max())
+        plt.scatter(area, price, marker='o', color='orange')
+        plt.axis([self._df['area'].min()-1000, self._df['area'].max()+1000, self._df['price'].min()-100000, self._df['price'].max()+100000])  # xmin, xmax, ymin, ymax
+        plt.xlabel('area(m^2)')
+        plt.ylabel('cost($)')
+        plt.locator_params(axis='y', nbins=5)
+        plt.gca().ticklabel_format(useOffset=False)
+        plt.title('Relathionship between area and finally cost for flat')
+        plt.show()
+
+    def _Func(self):
+        pprint(self._x_assume)
+
     def OLS(self):
         '''
         
@@ -33,4 +66,6 @@ class OLS():
         '''
 
         self._StoringDataSet()  # store data set
-        print(self._df)
+        self._Func()
+        self._Vizualization()
+
