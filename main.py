@@ -1,5 +1,8 @@
 from OLS import OLS
 
 if __name__ == '__main__':
-    proj = OLS()
-    print(proj._test)
+    try:
+        proj = OLS()
+        proj.OLS()
+    except Exception as e:
+        print(e)
