@@ -62,8 +62,7 @@ class OLS():
         plt.title('Area to cost')
         plt.show()
 
-
-    def _Alg(self):
+    def _Algp(self):
         x_mul_y_mean = np.mean(np.multiply(self._x, self._y))
         x_mean_mul_y_mean = np.mean(self._x)*np.mean(self._y)
         x_in_2_mean = np.mean(np.multiply(self._x, self._x))
@@ -71,7 +70,23 @@ class OLS():
         
         self._b2 =  (x_mul_y_mean-x_mean_mul_y_mean)/(x_in_2_mean-x_mean_in_2)
         self._b1 = np.mean(self._y) - self._b2*np.mean(self._x)
+        self._y_predict = self._b1 + self._b2*self._x
+
+        self._e = self._y - self._y_predict  # positive (up), negative (down)
+
+        self._e = np.sum(self._e)
+        self._sum_of_y = np.sum(self._y)
+        self._sum_of_y_predict = np.sum(self._y_predict)
         
+    def _Alg(self):
+        
+        self._x_mean = np.mean(self._x)
+        self._y_mean = np.mean(self._y)
+        self._1 = np.sum(np.multiply((self._x - self._x_mean), (self._y - self._y_mean)))
+        self._2 = np.sum(np.power((self._x - self._x_mean), 2))
+        
+        self._b2 = self._1/self._2
+        self._b1 = self._y_mean - self._b2*self._x_mean
         self._y_predict = self._b1 + self._b2*self._x
 
         self._e = self._y - self._y_predict  # positive (up), negative (down)
@@ -92,11 +107,12 @@ class OLS():
 
         # calc b2
         
-        for i in range(30):
+        for i in range(50):
             self._Sorting()
             self._Alg()
             self._solv.loc[len(self._solv)] = {'Sum of real Y':self._sum_of_y, 'Sum of predict Y':self._sum_of_y_predict, 'Regression residual':self._e}
-        
+            #self._Vizualization()
+
         print(self._solv)
         #self._Vizualization()
         
