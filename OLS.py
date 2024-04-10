@@ -19,10 +19,10 @@ class OLS():
         if not path.is_file():  # check is file with dataset exist
             raise Exception(f'Error! File with dataset on path {self.PATH_TO_DATASET} is not exist')
         
-        self.df = pd.read_csv('dataset/Housing.csv')  # store dataset to dataframe
-        self.df = self.df.loc[:, ['price', 'area']]  # search 'area' and 'cost'
+        self._df = pd.read_csv('dataset/Housing.csv')  # store dataset to dataframe
+        self._df = self._df.loc[:, ['price', 'area']]  # search 'area' and 'cost'
 
-        if self.df.empty:  # check is dataframe not empty
+        if self._df.empty:  # check is dataframe not empty
             raise Exception(f'Waring! Data set on path {self.PATH_TO_DATASET} is empty. Counting is aborted.')
     
     def OLS(self):
@@ -33,3 +33,4 @@ class OLS():
         '''
 
         self._StoringDataSet()  # store data set
+        print(self._df)
