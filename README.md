@@ -1,5 +1,5 @@
 # 0MS
-university project by subject 0MS
+University project for 0MS(Math Software).
 
 ## Description
 
