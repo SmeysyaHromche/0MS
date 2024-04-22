@@ -1,4 +1,6 @@
 # 0MS
+Author: Myron Kukhta (xkukht01)
+
 University project for 0MS(Math Software).
 
 ## Description
